@@ -70,7 +70,7 @@
     <section class="section">
       <div class="container">
         <h2 class="section-title">Останні надходження</h2>
-        <div id="home-products-grid" class="products-grid">
+        <div id="home-products-grid" class="products-grid" style="grid-template-columns:repeat(3,1fr)">
           <div class="loading-state" style="grid-column:1/-1">
             <div class="spinner"></div>
             <span>Завантаження товарів…</span>
@@ -178,7 +178,7 @@
         const resp = await fetch('products.json');
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         const data = await resp.json();
-        const products = (Array.isArray(data) ? data : (data.products || [])).slice(0, 4);
+        const products = (Array.isArray(data) ? data : (data.products || [])).slice(0, 6);
 
         if (!products.length) {
           grid.innerHTML = '<p class="text-muted" style="grid-column:1/-1">Товари незабаром з\'являться.</p>';

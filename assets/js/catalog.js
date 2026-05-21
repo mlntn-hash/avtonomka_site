@@ -1,12 +1,32 @@
-/* catalog.js — завантаження та рендер товарів */
-
-const { formatPrice, stripHtml, truncate, tgOrderLink } = window.AvtonomkaUtils;
+/* catalog.js — завантаження та рендер товарів (self-contained) */
 
 const ITEMS_PER_PAGE = 24;
 
 let allProducts = [];
 let filtered    = [];
 let currentPage = 1;
+
+/* ---- Local helpers (не залежать від main.js) ---- */
+function truncate(str, len) {
+  if (!str) return '';
+  return str.length > len ? str.slice(0, len).trimEnd() + '…' : str;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function formatPrice(raw) {
+  if (!raw) return '';
+  const num = parseFloat(raw);
+  if (isNaN(num)) return raw;
+  const currency = raw.replace(/[\d.\s]+/, '').trim() || 'UAH';
+  return num.toLocaleString('uk-UA', { maximumFractionDigits: 0 }) + ' ' + currency;
+}
 
 /* ---- DOM refs ---- */
 const grid        = document.getElementById('products-grid');
@@ -15,11 +35,12 @@ const pagination  = document.getElementById('pagination');
 const searchInput = document.getElementById('filter-search');
 const catSelect   = document.getElementById('filter-category');
 const sortSelect  = document.getElementById('filter-sort');
-const radios      = document.querySelectorAll('input[name="availability"]');
 
 /* ---- Init ---- */
 async function init() {
+  if (!grid) return;
   showLoading();
+
   try {
     const resp = await fetch('products.json');
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
@@ -35,6 +56,7 @@ async function init() {
 
 /* ---- Populate category dropdown ---- */
 function populateCategories() {
+  if (!catSelect) return;
   const types = [...new Set(allProducts.map(p => p.product_type).filter(Boolean))].sort();
   types.forEach(t => {
     const opt = document.createElement('option');
@@ -46,13 +68,14 @@ function populateCategories() {
 
 /* ---- Filter + sort ---- */
 function applyFilters() {
-  const query = searchInput.value.trim().toLowerCase();
-  const cat   = catSelect.value;
-  const avail = document.querySelector('input[name="availability"]:checked')?.value || 'all';
-  const sort  = sortSelect.value;
+  const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+  const cat   = catSelect ? catSelect.value : '';
+  const availEl = document.querySelector('input[name="availability"]:checked');
+  const avail = availEl ? availEl.value : 'all';
+  const sort  = sortSelect ? sortSelect.value : 'name_asc';
 
   filtered = allProducts.filter(p => {
-    if (query && !p.title?.toLowerCase().includes(query)) return false;
+    if (query && !(p.title || '').toLowerCase().includes(query)) return false;
     if (cat && p.product_type !== cat) return false;
     if (avail === 'in_stock' && p.availability !== 'in_stock') return false;
     return true;
@@ -79,18 +102,22 @@ function render() {
   const end   = Math.min(start + ITEMS_PER_PAGE, total);
   const page  = filtered.slice(start, end);
 
-  counter.textContent = `Показано ${start + 1}–${end} з ${total} товарів`;
-  if (total === 0) counter.textContent = 'Товарів не знайдено';
+  if (counter) {
+    counter.textContent = total === 0
+      ? 'Товарів не знайдено'
+      : `Показано ${start + 1}–${end} з ${total} товарів`;
+  }
 
   grid.innerHTML = '';
+
   if (page.length === 0) {
     grid.innerHTML = `
       <div class="empty-state" style="grid-column:1/-1">
-        <img src="assets/images/sticker.webp" alt="Хом'як-електрик" loading="lazy">
+        <img src="assets/images/sticker.webp" alt="" loading="lazy">
         <h3>Нічого не знайдено</h3>
         <p>Спробуйте змінити параметри пошуку або скиньте фільтри.</p>
       </div>`;
-    pagination.innerHTML = '';
+    if (pagination) pagination.innerHTML = '';
     return;
   }
 
@@ -100,22 +127,19 @@ function render() {
 
 /* ---- Card HTML ---- */
 function renderCard(p) {
-  const inStock = p.availability === 'in_stock';
-  const badge   = inStock
+  const inStock  = p.availability === 'in_stock';
+  const badge    = inStock
     ? '<span class="badge badge-green">В наявності</span>'
     : '<span class="badge badge-grey">Немає</span>';
-  const rawPrice = p.price || '';
-  const priceNum = parseFloat(rawPrice);
-  const priceStr = !isNaN(priceNum)
-    ? priceNum.toLocaleString('uk-UA', { maximumFractionDigits: 0 }) + ' ' + (rawPrice.replace(/[\d.]+\s*/,'') || 'UAH')
-    : rawPrice;
-  const title = truncate(p.title || '', 60);
-  const cat   = (p.product_type || '').split('>').pop().trim();
+  const priceStr = formatPrice(p.price || '');
+  const title    = truncate(p.title || '', 60);
+  const cat      = (p.product_type || '').split('>').pop().trim();
+  const img      = p.image_link || 'assets/images/sticker.webp';
 
   return `
   <div class="product-card">
     <div class="product-card__img-wrap">
-      <img src="${p.image_link || 'assets/images/sticker.webp'}"
+      <img src="${escapeHtml(img)}"
            alt="${escapeHtml(p.title || '')}"
            loading="lazy"
            onerror="this.src='assets/images/sticker.webp'">
@@ -139,14 +163,13 @@ function renderCard(p) {
 
 /* ---- Pagination ---- */
 function renderPagination(total) {
+  if (!pagination) return;
   const pages = Math.ceil(total / ITEMS_PER_PAGE);
   if (pages <= 1) { pagination.innerHTML = ''; return; }
 
-  let html = '';
-  html += `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">&#8592;</button>`;
+  let html = `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">&#8592;</button>`;
 
-  const range = buildPageRange(currentPage, pages);
-  range.forEach(p => {
+  buildPageRange(currentPage, pages).forEach(p => {
     if (p === '...') {
       html += `<span style="padding:0 6px;color:var(--color-muted)">…</span>`;
     } else {
@@ -157,7 +180,7 @@ function renderPagination(total) {
   html += `<button class="page-btn" ${currentPage === pages ? 'disabled' : ''} data-page="${currentPage + 1}">&#8594;</button>`;
   pagination.innerHTML = html;
 
-  pagination.querySelectorAll('.page-btn:not(:disabled)').forEach(btn => {
+  pagination.querySelectorAll('.page-btn:not([disabled])').forEach(btn => {
     btn.addEventListener('click', () => {
       currentPage = +btn.dataset.page;
       render();
@@ -190,37 +213,32 @@ function showError() {
     <div class="empty-state" style="grid-column:1/-1">
       <img src="assets/images/sticker.webp" alt="" loading="lazy">
       <h3>Не вдалося завантажити товари</h3>
-      <p>Перевірте підключення до інтернету або спробуйте пізніше.</p>
+      <p>Перевірте підключення або спробуйте пізніше.</p>
     </div>`;
 }
 
-/* ---- Escape HTML ---- */
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
 /* ---- Event listeners ---- */
-searchInput?.addEventListener('input', debounce(applyFilters, 250));
-catSelect?.addEventListener('change', applyFilters);
-sortSelect?.addEventListener('change', applyFilters);
-radios?.forEach(r => r.addEventListener('change', applyFilters));
-
-document.getElementById('filter-reset')?.addEventListener('click', () => {
-  searchInput.value = '';
-  catSelect.value = '';
-  sortSelect.value = 'name_asc';
-  document.querySelector('input[name="availability"][value="all"]').checked = true;
-  applyFilters();
-});
-
 function debounce(fn, ms) {
   let t;
   return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
 }
+
+if (searchInput) searchInput.addEventListener('input', debounce(applyFilters, 250));
+if (catSelect)   catSelect.addEventListener('change', applyFilters);
+if (sortSelect)  sortSelect.addEventListener('change', applyFilters);
+
+document.querySelectorAll('input[name="availability"]').forEach(r =>
+  r.addEventListener('change', applyFilters)
+);
+
+document.getElementById('filter-reset')?.addEventListener('click', () => {
+  if (searchInput) searchInput.value = '';
+  if (catSelect)   catSelect.value   = '';
+  if (sortSelect)  sortSelect.value  = 'name_asc';
+  const allRadio = document.querySelector('input[name="availability"][value="all"]');
+  if (allRadio) allRadio.checked = true;
+  applyFilters();
+});
 
 /* ---- Start ---- */
 init();
