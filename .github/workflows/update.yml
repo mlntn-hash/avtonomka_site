@@ -68,8 +68,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: main          # після можливого push з job update-data
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
