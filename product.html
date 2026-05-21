@@ -81,28 +81,43 @@
             <!-- Gallery -->
             <div class="product-gallery">
               <div class="gallery-main">
-                <img id="gallery-main-img" src="" alt="" style="transition:opacity .3s">
+                <img id="gallery-main-img" src="" alt="">
               </div>
               <div id="gallery-thumbs" class="gallery-thumbs"></div>
             </div>
 
-            <!-- Info -->
+            <!-- Info panel -->
             <div class="product-info">
-              <span id="product-availability" class="badge"></span>
-              <h1 id="product-title" class="product-title"></h1>
 
-              <div class="product-meta">
-                <span><b>Артикул:</b> <span id="product-mpn"></span></span>
-                <span><b>Категорія:</b> <span id="product-cat"></span></span>
+              <div class="product-info__header">
+                <div class="product-info__badges">
+                  <span id="product-availability" class="badge"></span>
+                </div>
+                <h1 id="product-title" class="product-title"></h1>
               </div>
 
-              <div class="product-price-box">
-                <span id="product-price" class="product-price"></span>
+              <div class="product-info__price-block">
+                <div class="product-price-label">Ціна</div>
+                <div id="product-price" class="product-price"></div>
               </div>
 
-              <div id="product-desc" class="product-desc"></div>
+              <div class="product-info__meta">
+                <div class="product-meta-row">
+                  <span class="product-meta-row__label">Артикул</span>
+                  <span class="product-meta-row__value" id="product-mpn">—</span>
+                </div>
+                <div class="product-meta-row">
+                  <span class="product-meta-row__label">Категорія</span>
+                  <span class="product-meta-row__value" id="product-cat">—</span>
+                </div>
+              </div>
 
-              <div class="product-actions">
+              <div class="product-info__desc">
+                <div class="product-desc-title">Опис</div>
+                <div id="product-desc" class="product-desc"></div>
+              </div>
+
+              <div class="product-info__actions">
                 <a id="btn-order" href="#" target="_blank" rel="noopener" class="btn btn-tg">
                   ✈ Замовити в Telegram
                 </a>
@@ -110,7 +125,9 @@
                   ← Назад до каталогу
                 </a>
               </div>
+
             </div>
+            <!-- /product-info -->
 
           </div>
         </div>

@@ -129,33 +129,33 @@ function render() {
 function renderCard(p) {
   const inStock  = p.availability === 'in_stock';
   const badge    = inStock
-    ? '<span class="badge badge-green">В наявності</span>'
+    ? '<span class="badge badge-green">✓ В наявності</span>'
     : '<span class="badge badge-grey">Немає</span>';
   const priceStr = formatPrice(p.price || '');
-  const title    = truncate(p.title || '', 60);
+  const title    = truncate(p.title || '', 80);
   const cat      = (p.product_type || '').split('>').pop().trim();
   const img      = p.image_link || 'assets/images/sticker.webp';
 
   return `
   <div class="product-card">
-    <div class="product-card__img-wrap">
+    <a href="product.html?id=${encodeURIComponent(p.id)}" class="product-card__img-wrap" aria-label="${escapeHtml(title)}">
       <img src="${escapeHtml(img)}"
            alt="${escapeHtml(p.title || '')}"
            loading="lazy"
            onerror="this.src='assets/images/sticker.webp'">
       <div class="product-card__availability">${badge}</div>
-    </div>
+    </a>
     <div class="product-card__body">
       ${cat ? `<div class="product-card__category">${escapeHtml(cat)}</div>` : ''}
       <div class="product-card__title">${escapeHtml(title)}</div>
-      <div class="product-card__meta">
-        <span class="price-tag">${escapeHtml(priceStr)}</span>
-        ${p.mpn ? `<span class="product-card__sku text-muted">Арт.: ${escapeHtml(p.mpn)}</span>` : ''}
+      <div class="product-card__price-row">
+        <span class="product-card__price">${escapeHtml(priceStr)}</span>
+        ${p.mpn ? `<span class="product-card__sku">Арт.: ${escapeHtml(p.mpn)}</span>` : ''}
       </div>
     </div>
     <div class="product-card__footer">
-      <a href="product.html?id=${encodeURIComponent(p.id)}" class="btn btn-primary btn-block btn-sm">
-        Детальніше
+      <a href="product.html?id=${encodeURIComponent(p.id)}" class="btn btn-block">
+        Детальніше →
       </a>
     </div>
   </div>`;

@@ -64,10 +64,10 @@ function render(p) {
   if (titleEl) titleEl.textContent = p.title || '';
 
   /* meta */
-  const mpnEl  = document.getElementById('product-mpn');
-  const catEl  = document.getElementById('product-cat');
-  if (mpnEl)  mpnEl.textContent   = p.mpn || '—';
-  if (catEl)  catEl.textContent   = p.product_type || '—';
+  const mpnEl = document.getElementById('product-mpn');
+  const catEl = document.getElementById('product-cat');
+  if (mpnEl) mpnEl.textContent = p.mpn || '—';
+  if (catEl) catEl.textContent = (p.product_type || '').split('>').pop().trim() || '—';
 
   /* price */
   const priceEl = document.getElementById('product-price');
