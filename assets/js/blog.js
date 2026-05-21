@@ -1,6 +1,17 @@
 /* blog.js — завантаження та рендер постів Telegram */
 
-const { truncate } = window.AvtonomkaUtils;
+function truncate(str, len) {
+  if (!str) return '';
+  return str.length > len ? str.slice(0, len).trimEnd() + '…' : str;
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 
 async function init() {
   const grid = document.getElementById('blog-grid');
@@ -77,14 +88,6 @@ function showError(grid) {
         Telegram-канал
       </a>
     </div>`;
-}
-
-function escHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
 }
 
 /* ---- Home page: 3 latest posts ---- */
