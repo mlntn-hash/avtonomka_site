@@ -1,4 +1,4 @@
-/* product.js — сторінка окремого товару (self-contained) */
+﻿/* product.js — сторінка окремого товару (self-contained) */
 
 /* ---- Local helpers ---- */
 function stripHtml(html) {
@@ -25,7 +25,7 @@ function escHtml(str) {
 }
 
 function tgOrderLink(title) {
-  return 'https://t.me/dfgbdfkjbvgdfkju?text=' + encodeURIComponent('Хочу замовити: ' + title);
+  return 'https://t.me/avtonomka_od?text=' + encodeURIComponent('Хочу замовити: ' + title);
 }
 
 /* ---- Init ---- */

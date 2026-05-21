@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 Завантажує останні 20 постів із публічного Telegram-каналу
 через парсинг публічної веб-версії t.me/s/<channel>
@@ -19,7 +19,7 @@ if hasattr(sys.stdout, "reconfigure"):
 import requests
 from bs4 import BeautifulSoup
 
-CHANNEL    = "dfgbdfkjbvgdfkju"
+CHANNEL    = "avtonomka_od"
 CHANNEL_URL = f"https://t.me/s/{CHANNEL}"
 OUTPUT_FILE = Path(__file__).parent.parent / "data" / "telegram_posts.json"
 MAX_POSTS   = 20

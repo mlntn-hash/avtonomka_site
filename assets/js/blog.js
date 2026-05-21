@@ -1,4 +1,4 @@
-/* blog.js — завантаження та рендер постів Telegram */
+﻿/* blog.js — завантаження та рендер постів Telegram */
 
 function truncate(str, len) {
   if (!str) return '';
@@ -51,7 +51,7 @@ function renderCard(post) {
     <div class="blog-card__body">
       ${dateStr ? `<div class="blog-card__date">${escHtml(dateStr)}</div>` : ''}
       <div class="blog-card__text">${escHtml(shortText)}</div>
-      <a href="${escHtml(post.url || 'https://t.me/dfgbdfkjbvgdfkju')}"
+      <a href="${escHtml(post.url || 'https://t.me/avtonomka_od')}"
          target="_blank" rel="noopener noreferrer"
          class="blog-card__link">Читати далі →</a>
     </div>
@@ -72,7 +72,7 @@ function showEmpty(grid) {
       <img src="assets/images/1111111.webp" alt="Хом'як" loading="lazy">
       <h3>Поки що новин немає</h3>
       <p>Слідкуйте за нашим Telegram-каналом, щоб не пропустити оновлення.</p>
-      <a href="https://t.me/dfgbdfkjbvgdfkju" target="_blank" rel="noopener" class="btn btn-tg">
+      <a href="https://t.me/avtonomka_od" target="_blank" rel="noopener" class="btn btn-tg">
         Підписатись на канал
       </a>
     </div>`;
@@ -84,7 +84,7 @@ function showError(grid) {
       <img src="assets/images/sticker.webp" alt="" loading="lazy">
       <h3>Не вдалося завантажити новини</h3>
       <p>Спробуйте пізніше або перегляньте наш Telegram-канал.</p>
-      <a href="https://t.me/dfgbdfkjbvgdfkju" target="_blank" rel="noopener" class="btn btn-tg">
+      <a href="https://t.me/avtonomka_od" target="_blank" rel="noopener" class="btn btn-tg">
         Telegram-канал
       </a>
     </div>`;

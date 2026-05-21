@@ -1,4 +1,4 @@
-/* main.js — загальна логіка */
+﻿/* main.js — загальна логіка */
 
 /* ---- Active nav link ---- */
 (function () {
@@ -57,7 +57,7 @@ function truncate(str, len) {
 /* ---- Build Telegram order link ---- */
 function tgOrderLink(title) {
   const text = encodeURIComponent('Хочу замовити: ' + title);
-  return 'https://t.me/dfgbdfkjbvgdfkju?text=' + text;
+  return 'https://t.me/avtonomka_od?text=' + text;
 }
 
 /* ---- Expose helpers globally ---- */
