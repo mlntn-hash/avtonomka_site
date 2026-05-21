@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Товар — Автономка</title>
+  <meta name="description" content="Детальна інформація про товар в магазині Автономка.">
+  <meta property="og:title" content="Автономка — товар">
+  <meta property="og:image" content="assets/images/sticker.webp">
+  <link rel="icon" href="assets/images/logo.jpg" type="image/jpeg">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ======= HEADER ======= -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo-link">
+          <img src="assets/images/logo.jpg" alt="Автономка" class="logo-img">
+          <span class="logo-text">Автономка</span>
+        </a>
+        <nav class="main-nav" id="main-nav" aria-label="Головне меню">
+          <ul>
+            <li><a href="index.html">Головна</a></li>
+            <li><a href="catalog.html">Каталог</a></li>
+            <li><a href="blog.html">Новини</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <a href="https://t.me/dfgbdfkjbvgdfkju" target="_blank" rel="noopener" class="btn btn-tg btn-sm">
+            ✈ Написати нам
+          </a>
+        </div>
+        <button class="burger" id="burger" aria-label="Відкрити меню" aria-expanded="false" aria-controls="main-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="product-page">
+      <div class="container">
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="Навігаційні хлібні крихти">
+          <a href="index.html">Головна</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="catalog.html">Каталог</a>
+          <span class="breadcrumb-sep">/</span>
+          <span id="bc-name">Товар</span>
+        </nav>
+
+        <!-- Loading -->
+        <div id="loading-state" class="loading-state">
+          <div class="spinner"></div>
+          <span>Завантаження товару…</span>
+        </div>
+
+        <!-- Not found -->
+        <div id="not-found-state" class="empty-state hidden">
+          <img src="assets/images/1111111.webp" alt="" loading="lazy">
+          <h3>Товар не знайдено</h3>
+          <p>Можливо, товар більше не існує або посилання невірне.</p>
+          <a href="catalog.html" class="btn btn-primary">Повернутись до каталогу</a>
+        </div>
+
+        <!-- Error -->
+        <div id="error-state" class="empty-state hidden">
+          <img src="assets/images/sticker.webp" alt="" loading="lazy">
+          <h3>Помилка завантаження</h3>
+          <p>Не вдалося завантажити інформацію про товар. Спробуйте пізніше.</p>
+          <a href="catalog.html" class="btn btn-outline">До каталогу</a>
+        </div>
+
+        <!-- Product content -->
+        <div id="product-content" class="hidden">
+          <div class="product-layout">
+
+            <!-- Gallery -->
+            <div class="product-gallery">
+              <div class="gallery-main">
+                <img id="gallery-main-img" src="" alt="" style="transition:opacity .3s">
+              </div>
+              <div id="gallery-thumbs" class="gallery-thumbs"></div>
+            </div>
+
+            <!-- Info -->
+            <div class="product-info">
+              <span id="product-availability" class="badge"></span>
+              <h1 id="product-title" class="product-title"></h1>
+
+              <div class="product-meta">
+                <span><b>Артикул:</b> <span id="product-mpn"></span></span>
+                <span><b>Категорія:</b> <span id="product-cat"></span></span>
+              </div>
+
+              <div class="product-price-box">
+                <span id="product-price" class="product-price"></span>
+              </div>
+
+              <div id="product-desc" class="product-desc"></div>
+
+              <div class="product-actions">
+                <a id="btn-order" href="#" target="_blank" rel="noopener" class="btn btn-tg">
+                  ✈ Замовити в Telegram
+                </a>
+                <a href="catalog.html" class="btn btn-outline">
+                  ← Назад до каталогу
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- /product-content -->
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ======= FOOTER ======= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <img src="assets/images/logo.jpg" alt="Автономка" style="height:32px;width:32px;object-fit:contain;border-radius:4px">
+          <span class="footer-logo-text">Автономка</span>
+        </div>
+        <nav class="footer-links" aria-label="Нижня навігація">
+          <a href="index.html">Головна</a>
+          <a href="catalog.html">Каталог</a>
+          <a href="blog.html">Новини</a>
+          <a href="https://t.me/dfgbdfkjbvgdfkju" target="_blank" rel="noopener">Telegram</a>
+        </nav>
+        <p class="footer-copy">&copy; 2025 Автономка. Всі права захищені.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/product.js"></script>
+</body>
+</html>
