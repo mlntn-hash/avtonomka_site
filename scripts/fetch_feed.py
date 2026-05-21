@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 """
-Завантажує XML фід товарів і конвертує в products.json
+Завантажує XML фід товарів і конвертує в products.json.
+Залишає лише товари з категорії "Автономна енергетика".
 XML URL: https://dfi.ua/ua/index.php?route=extension/feed/remarketing_feed&key=ym0pG56iVXSvgSFf890Y
 Namespace: xmlns:g="http://base.google.com/ns/1.0"
 """
 
 import json
 import sys
-import time
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
-import sys
-
-# Windows console UTF-8
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
@@ -27,6 +24,9 @@ FEED_URL = (
 OUTPUT_FILE = Path(__file__).parent.parent / "products.json"
 NS = "http://base.google.com/ns/1.0"
 
+# Залишаємо тільки товари з цієї категорії
+ALLOWED_CATEGORY = "Автономна енергетика"
+
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (compatible; Googlebot/2.1; "
@@ -36,7 +36,6 @@ HEADERS = {
 
 
 def g(element, tag):
-    """Get text of a namespaced <g:tag> child."""
     child = element.find(f"{{{NS}}}{tag}")
     return child.text.strip() if child is not None and child.text else ""
 
@@ -48,7 +47,16 @@ def parse_feed(xml_bytes: bytes) -> list[dict]:
         raise ValueError("Не знайдено елемент <channel> у фіді")
 
     products = []
+    skipped = 0
+
     for item in channel.findall("item"):
+        product_type = g(item, "product_type")
+
+        # Фільтр: залишаємо тільки "Автономна енергетика"
+        if ALLOWED_CATEGORY not in product_type:
+            skipped += 1
+            continue
+
         additional_images = [
             el.text.strip()
             for el in item.findall(f"{{{NS}}}additional_image_link")
@@ -64,12 +72,11 @@ def parse_feed(xml_bytes: bytes) -> list[dict]:
             "additional_images": additional_images,
             "price":             g(item, "price"),
             "availability":      g(item, "availability"),
-            "product_type":      g(item, "product_type"),
+            "product_type":      product_type,
             "mpn":               g(item, "mpn"),
             "condition":         g(item, "condition"),
         }
 
-        # Fallback: plain <title> / <link> if g:title is empty
         if not product["title"]:
             t = item.find("title")
             product["title"] = t.text.strip() if t is not None and t.text else ""
@@ -80,11 +87,13 @@ def parse_feed(xml_bytes: bytes) -> list[dict]:
         if product["id"]:
             products.append(product)
 
+    print(f"  Категорія '{ALLOWED_CATEGORY}': {len(products)} товарів")
+    print(f"  Відфільтровано (інші категорії): {skipped}")
     return products
 
 
 def main() -> int:
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] Завантаження фіду…")
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Завантаження фіду...")
     try:
         resp = requests.get(FEED_URL, headers=HEADERS, timeout=60)
         resp.raise_for_status()
@@ -100,20 +109,12 @@ def main() -> int:
         print(f"ПОМИЛКА: парсинг XML: {exc}", file=sys.stderr)
         return 1
 
-    print(f"  Розпізнано товарів: {len(products)}")
-
-    output = {
-        "updated_at": datetime.now(timezone.utc).isoformat(),
-        "count":      len(products),
-        "products":   products,
-    }
-
-    # Write array directly so JS can do: Array.isArray(data) ? data : data.products
     OUTPUT_FILE.write_text(
         json.dumps(products, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
-    print(f"  Збережено → {OUTPUT_FILE}")
+    size_kb = OUTPUT_FILE.stat().st_size // 1024
+    print(f"  Збережено -> {OUTPUT_FILE} ({size_kb} KB)")
     return 0
 
 
