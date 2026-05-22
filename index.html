@@ -129,6 +129,22 @@
       </div>
     </section>
 
+    <!-- ======= ОСТАННІ СТАТТІ ======= -->
+    <section class="section" style="background:var(--color-white)">
+      <div class="container">
+        <h2 class="section-title">Останні статті</h2>
+        <div id="home-articles-grid" class="articles-grid" style="grid-template-columns:repeat(3,1fr)">
+          <div class="loading-state" style="grid-column:1/-1">
+            <div class="spinner"></div>
+            <span>Завантаження статей…</span>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:32px">
+          <a href="articles.html" class="btn btn-outline">Всі статті</a>
+        </div>
+      </div>
+    </section>
+
     <!-- ======= КОНТАКТИ ======= -->
     <section class="section contacts-section">
       <div class="container">
@@ -228,5 +244,37 @@
     })();
   </script>
   <script src="assets/js/blog.js"></script>
+  <script>
+    /* Останні 3 статті для головної */
+    (async function () {
+      const grid = document.getElementById('home-articles-grid');
+      try {
+        const resp = await fetch('data/articles.json');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const articles = await resp.json();
+        const latest = (Array.isArray(articles) ? articles : []).slice(0, 3);
+        if (!latest.length) {
+          grid.innerHTML = '<p class="text-muted" style="grid-column:1/-1">Статті незабаром з\'являться.</p>';
+          return;
+        }
+        function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+        grid.innerHTML = latest.map(a => {
+          const date = a.date ? new Date(a.date).toLocaleDateString('uk-UA', {day:'numeric',month:'long',year:'numeric'}) : '';
+          const img = a.photo ? `<div class="article-card__img"><img src="${esc(a.photo)}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : '<div class="article-card__img article-card__img--placeholder"></div>';
+          return `<a href="articles.html#${esc(a.id)}" class="article-card" style="text-decoration:none">
+            ${img}
+            <div class="article-card__body">
+              ${date ? `<div class="article-card__date">${esc(date)}</div>` : ''}
+              <h3 class="article-card__title">${esc(a.title || '')}</h3>
+              ${a.summary ? `<p class="article-card__summary">${esc(a.summary)}</p>` : ''}
+            </div>
+            <div class="article-card__footer"><span class="article-card__link">Читати далі →</span></div>
+          </a>`;
+        }).join('');
+      } catch (e) {
+        grid.innerHTML = '<p class="text-muted" style="grid-column:1/-1">Не вдалося завантажити статті.</p>';
+      }
+    })();
+  </script>
 </body>
 </html>

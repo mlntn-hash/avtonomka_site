@@ -906,7 +906,8 @@ main { flex: 1; }
   font-size: .95rem;
   line-height: 1.65;
   color: var(--color-text);
-  white-space: pre-line;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 .tg-post__footer {
   padding: 12px 20px 16px;
@@ -1022,20 +1023,21 @@ main { flex: 1; }
   outline: none;
 }
 .article-card__img {
-  aspect-ratio: 16/9;
   overflow: hidden;
-  background: var(--color-grey);
+  background: var(--color-white);
 }
 .article-card__img--placeholder {
+  min-height: 160px;
   background: linear-gradient(135deg, #e8ecf1 0%, #d0d8e4 100%);
 }
 .article-card__img img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
+  object-fit: contain;
   transition: transform .4s ease;
 }
-.article-card:hover .article-card__img img { transform: scale(1.05); }
+.article-card:hover .article-card__img img { transform: scale(1.02); }
 .article-card__body {
   padding: 20px 20px 12px;
   flex: 1;
