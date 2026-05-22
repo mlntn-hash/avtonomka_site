@@ -1,11 +1,34 @@
 ﻿/* product.js — сторінка окремого товару (self-contained) */
 
 /* ---- Local helpers ---- */
-function stripHtml(html) {
+function cleanDescription(html) {
   if (!html) return '';
-  const tmp = document.createElement('div');
-  tmp.innerHTML = html;
-  return (tmp.textContent || tmp.innerText || '').trim();
+  return html
+    // Fix broken tags where < was stored as lt; without &
+    .replace(/lt;\/[a-z][a-z0-9]*/gi, '')
+    .replace(/lt;[a-z][^>]*>/gi, '')
+    // Paragraph breaks → double newline
+    .replace(/<\/p>\s*<p[^>]*>/gi, '\n\n')
+    .replace(/<p[^>]*>/gi, '')
+    .replace(/<\/p>/gi, '\n\n')
+    // Line breaks
+    .replace(/<br\s*\/?>/gi, '\n')
+    // Strip remaining tags
+    .replace(/<[^>]+>/g, '')
+    // Decode common entities via DOM
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&rsquo;/g, '’')
+    .replace(/&lsquo;/g, '‘')
+    .replace(/&mdash;/g, '—')
+    .replace(/&ndash;/g, '–')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    // Clean up whitespace
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 function formatPrice(raw) {
@@ -114,7 +137,7 @@ function render(p) {
   /* ---- Description ---- */
   const descEl = document.getElementById('product-desc');
   if (descEl) {
-    const clean = stripHtml(p.description || '');
+    const clean = cleanDescription(p.description || '');
     descEl.textContent = clean || 'Опис відсутній.';
   }
 

@@ -822,6 +822,7 @@ main { flex: 1; }
   color: #444;
   max-height: 200px;
   overflow-y: auto;
+  white-space: pre-line;
 }
 .product-desc::-webkit-scrollbar { width: 4px; }
 .product-desc::-webkit-scrollbar-track { background: var(--color-grey); border-radius: 2px; }
