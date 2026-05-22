@@ -1,10 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 — Сторінку не знайдено | Автономка</title>
-  <meta name="description" content="Сторінку не знайдено. Поверніться на головну Автономки.">
+  <title>Статті — Автономка</title>
+  <meta name="description" content="Корисні статті та матеріали від магазину Автономка. Поради щодо автономного живлення, вибору обладнання та встановлення.">
+  <meta property="og:title" content="Статті — Автономка">
+  <meta property="og:description" content="Корисні матеріали зі світу автономного живлення.">
+  <meta property="og:image" content="assets/images/sticker.webp">
   <link rel="icon" href="assets/images/logo.jpg" type="image/jpeg">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -23,7 +26,7 @@
             <li><a href="index.html">Головна</a></li>
             <li><a href="catalog.html">Каталог</a></li>
             <li><a href="blog.html">Новини</a></li>
-            <li><a href="articles.html">Статті</a></li>
+            <li><a href="articles.html" class="active">Статті</a></li>
           </ul>
         </nav>
         <div class="header-actions">
@@ -38,23 +41,28 @@
     </div>
   </header>
 
-  <main>
-    <div class="page-404">
-      <div class="page-404__stickers">
-        <img src="assets/images/sticker.webp"  alt="Хом'як-електрик" loading="lazy">
-        <img src="assets/images/1111111.webp"  alt="Маскот Автономки"  loading="lazy">
-        <img src="assets/images/2222.webp"     alt="Маскот Автономки"  loading="lazy">
-      </div>
-
-      <h1>404</h1>
-      <h2>Сторінку не знайдено</h2>
-      <p>Схоже, наш хом'як-електрик вкусив потрібний дріт і сторінка зникла. Не хвилюйтесь — повертайтесь на головну!</p>
-
-      <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
-        <a href="index.html" class="btn btn-primary">На головну</a>
-        <a href="catalog.html" class="btn btn-outline">До каталогу</a>
-      </div>
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="container">
+      <h1>Статті</h1>
+      <p>Корисні матеріали, поради та огляди обладнання для автономного живлення</p>
     </div>
+  </div>
+
+  <main>
+    <section class="articles-page">
+      <div class="container">
+
+        <!-- List view -->
+        <div id="articles-list">
+          <div id="articles-grid" class="articles-grid"></div>
+        </div>
+
+        <!-- Full article view -->
+        <div id="article-detail" class="hidden"></div>
+
+      </div>
+    </section>
   </main>
 
   <!-- ======= FOOTER ======= -->
@@ -78,5 +86,6 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/articles.js"></script>
 </body>
 </html>
