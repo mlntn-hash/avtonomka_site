@@ -1,9 +1,4 @@
-﻿/* blog.js — завантаження та рендер постів Telegram */
-
-function truncate(str, len) {
-  if (!str) return '';
-  return str.length > len ? str.slice(0, len).trimEnd() + '…' : str;
-}
+/* blog.js — завантаження та рендер постів Telegram */
 
 function escHtml(str) {
   return String(str)
@@ -13,6 +8,64 @@ function escHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
+function truncate(str, len) {
+  if (!str) return '';
+  return str.length > len ? str.slice(0, len).trimEnd() + '…' : str;
+}
+
+/* ---- Blog page: full Telegram-style post ---- */
+function renderPostFull(post) {
+  const dateStr = post.date
+    ? new Date(post.date).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })
+    : '';
+
+  const imgHtml = post.photo
+    ? `<div class="tg-post__img"><img src="${escHtml(post.photo)}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`
+    : '';
+
+  return `
+  <article class="tg-post">
+    <div class="tg-post__header">
+      <img src="assets/images/logo.jpg" alt="Автономка" class="tg-post__avatar">
+      <div class="tg-post__meta">
+        <span class="tg-post__channel">Автономка</span>
+        ${dateStr ? `<span class="tg-post__date">${escHtml(dateStr)}</span>` : ''}
+      </div>
+    </div>
+    ${imgHtml}
+    ${post.text ? `<div class="tg-post__text">${escHtml(post.text)}</div>` : ''}
+    <div class="tg-post__footer">
+      <a href="${escHtml(post.url || 'https://t.me/avtonomka_od')}"
+         target="_blank" rel="noopener noreferrer"
+         class="tg-post__link">Переглянути в Telegram →</a>
+    </div>
+  </article>`;
+}
+
+/* ---- Home page preview card (compact) ---- */
+function renderCard(post) {
+  const dateStr = post.date
+    ? new Date(post.date).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })
+    : '';
+  const imgHtml = post.photo
+    ? `<div class="blog-card__img"><img src="${escHtml(post.photo)}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`
+    : '';
+  const shortText = truncate(post.text || '', 160);
+
+  return `
+  <div class="blog-card">
+    ${imgHtml}
+    <div class="blog-card__body">
+      ${dateStr ? `<div class="blog-card__date">${escHtml(dateStr)}</div>` : ''}
+      <div class="blog-card__text">${escHtml(shortText)}</div>
+      <a href="${escHtml(post.url || 'https://t.me/avtonomka_od')}"
+         target="_blank" rel="noopener noreferrer"
+         class="blog-card__link">Читати далі →</a>
+    </div>
+  </div>`;
+}
+
+/* ---- Blog page init ---- */
 async function init() {
   const grid = document.getElementById('blog-grid');
   if (!grid) return;
@@ -29,38 +82,37 @@ async function init() {
       return;
     }
 
-    grid.innerHTML = posts.map(renderCard).join('');
+    grid.innerHTML = posts.map(renderPostFull).join('');
   } catch (e) {
     showError(grid);
     console.error('Помилка завантаження telegram_posts.json:', e);
   }
 }
 
-function renderCard(post) {
-  const dateStr = post.date
-    ? new Date(post.date).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })
-    : '';
-  const imgHtml = post.photo
-    ? `<div class="blog-card__img"><img src="${escHtml(post.photo)}" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`
-    : '';
-  const shortText = truncate(post.text || '', 200);
+/* ---- Home page: 2 latest posts ---- */
+async function initHomePreview() {
+  const grid = document.getElementById('home-blog-grid');
+  if (!grid) return;
 
-  return `
-  <div class="blog-card">
-    ${imgHtml}
-    <div class="blog-card__body">
-      ${dateStr ? `<div class="blog-card__date">${escHtml(dateStr)}</div>` : ''}
-      <div class="blog-card__text">${escHtml(shortText)}</div>
-      <a href="${escHtml(post.url || 'https://t.me/avtonomka_od')}"
-         target="_blank" rel="noopener noreferrer"
-         class="blog-card__link">Читати далі →</a>
-    </div>
-  </div>`;
+  try {
+    const resp  = await fetch('data/telegram_posts.json');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const posts = await resp.json();
+    const latest = (Array.isArray(posts) ? posts : []).slice(0, 2);
+
+    if (latest.length === 0) {
+      grid.innerHTML = '<p class="text-muted">Новини незабаром з\'являться.</p>';
+      return;
+    }
+    grid.innerHTML = latest.map(renderCard).join('');
+  } catch {
+    grid.innerHTML = '<p class="text-muted">Не вдалося завантажити новини.</p>';
+  }
 }
 
 function showLoading(grid) {
   grid.innerHTML = `
-    <div class="loading-state" style="grid-column:1/-1">
+    <div class="loading-state">
       <div class="spinner"></div>
       <span>Завантаження новин…</span>
     </div>`;
@@ -68,7 +120,7 @@ function showLoading(grid) {
 
 function showEmpty(grid) {
   grid.innerHTML = `
-    <div class="empty-state" style="grid-column:1/-1">
+    <div class="empty-state">
       <img src="assets/images/1111111.webp" alt="Хом'як" loading="lazy">
       <h3>Поки що новин немає</h3>
       <p>Слідкуйте за нашим Telegram-каналом, щоб не пропустити оновлення.</p>
@@ -80,7 +132,7 @@ function showEmpty(grid) {
 
 function showError(grid) {
   grid.innerHTML = `
-    <div class="empty-state" style="grid-column:1/-1">
+    <div class="empty-state">
       <img src="assets/images/sticker.webp" alt="" loading="lazy">
       <h3>Не вдалося завантажити новини</h3>
       <p>Спробуйте пізніше або перегляньте наш Telegram-канал.</p>
@@ -88,27 +140,6 @@ function showError(grid) {
         Telegram-канал
       </a>
     </div>`;
-}
-
-/* ---- Home page: 3 latest posts ---- */
-async function initHomePreview() {
-  const grid = document.getElementById('home-blog-grid');
-  if (!grid) return;
-
-  try {
-    const resp  = await fetch('data/telegram_posts.json');
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const posts = await resp.json();
-    const latest = (Array.isArray(posts) ? posts : []).slice(0, 3);
-
-    if (latest.length === 0) {
-      grid.innerHTML = '<p class="text-muted">Новини незабаром з\'являться.</p>';
-      return;
-    }
-    grid.innerHTML = latest.map(renderCard).join('');
-  } catch {
-    grid.innerHTML = '<p class="text-muted">Не вдалося завантажити новини.</p>';
-  }
 }
 
 /* ---- Start ---- */
