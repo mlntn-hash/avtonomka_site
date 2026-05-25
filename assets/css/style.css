@@ -899,8 +899,6 @@ main { flex: 1; }
   width: 100%;
   height: auto;
   display: block;
-  max-height: 500px;
-  object-fit: cover;
 }
 .tg-post__text {
   padding: 16px 20px;
