@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Читає товари з avtonomka.txt (JSON) і зберігає у products.json.
+Завантажує JSON-фід товарів з URL і зберігає у products.json.
+URL: https://dfi2.com.ua/price_xml/avtonomka.txt
 """
 
 import json
@@ -11,22 +12,36 @@ from pathlib import Path
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-ROOT = Path(__file__).parent.parent
-SOURCE_FILE = ROOT / "avtonomka.txt"
-OUTPUT_FILE = ROOT / "products.json"
+import requests
+
+FEED_URL = "https://dfi2.com.ua/price_xml/avtonomka.txt"
+OUTPUT_FILE = Path(__file__).parent.parent / "products.json"
+
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (compatible; Googlebot/2.1; "
+        "+http://www.google.com/bot.html)"
+    )
+}
 
 
 def main() -> int:
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] Читання {SOURCE_FILE.name}...")
-
-    if not SOURCE_FILE.exists():
-        print(f"ПОМИЛКА: файл {SOURCE_FILE} не знайдено", file=sys.stderr)
-        return 1
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] Завантаження {FEED_URL}...")
 
     try:
-        data = json.loads(SOURCE_FILE.read_text(encoding="utf-8-sig"))
+        resp = requests.get(FEED_URL, headers=HEADERS, timeout=60)
+        resp.raise_for_status()
+    except requests.RequestException as exc:
+        print(f"ПОМИЛКА: не вдалося завантажити фід: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"  Отримано {len(resp.content):,} байт")
+
+    try:
+        text = resp.content.decode("utf-8-sig")
+        data = json.loads(text)
     except Exception as exc:
-        print(f"ПОМИЛКА: не вдалося прочитати {SOURCE_FILE.name}: {exc}", file=sys.stderr)
+        print(f"ПОМИЛКА: не вдалося розпарсити JSON: {exc}", file=sys.stderr)
         return 1
 
     if not isinstance(data, list):
