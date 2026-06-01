@@ -134,7 +134,7 @@ function renderCard(p) {
   const priceStr = formatPrice(p.price || '');
   const title    = truncate(p.title || '', 80);
   const cat      = (p.product_type || '').split('>').pop().trim();
-  const img      = p.image_link || 'assets/images/sticker.webp';
+  const img      = p.image_link || 'assets/images/zaglushka.png';
 
   return `
   <div class="product-card">
@@ -142,7 +142,7 @@ function renderCard(p) {
       <img src="${escapeHtml(img)}"
            alt="${escapeHtml(p.title || '')}"
            loading="lazy"
-           onerror="this.src='assets/images/sticker.webp'">
+           onerror="this.src='assets/images/zaglushka.png'">
       <div class="product-card__availability">${badge}</div>
     </a>
     <div class="product-card__body">

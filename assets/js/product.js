@@ -93,7 +93,7 @@ function render(p) {
     thumbsWrap.innerHTML = images.map((src, i) => `
       <div class="gallery-thumb ${i === 0 ? 'active' : ''}" data-src="${escHtml(src)}">
         <img src="${escHtml(src)}" alt="Фото ${i + 1}" loading="lazy"
-             onerror="this.src='assets/images/sticker.webp'">
+             onerror="this.src='assets/images/zaglushka.png'">
       </div>`).join('');
 
     thumbsWrap.querySelectorAll('.gallery-thumb').forEach(thumb => {

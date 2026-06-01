@@ -218,12 +218,12 @@
           const priceStr = !isNaN(num) ? num.toLocaleString('uk-UA', { maximumFractionDigits: 0 }) + ' ' + currency : rawPrice;
           const title    = (p.title || '').length > 80 ? p.title.slice(0, 80) + '…' : (p.title || '');
           const cat      = (p.product_type || '').split('>').pop().trim();
-          const img      = p.image_link || 'assets/images/sticker.webp';
+          const img      = p.image_link || 'assets/images/zaglushka.png';
           const id       = encodeURIComponent(p.id);
           return `
           <div class="product-card">
             <a href="product.html?id=${id}" class="product-card__img-wrap" aria-label="${title}">
-              <img src="${img}" alt="${title}" loading="lazy" onerror="this.src='assets/images/sticker.webp'">
+              <img src="${img}" alt="${title}" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
               <div class="product-card__availability">${badge}</div>
             </a>
             <div class="product-card__body">
