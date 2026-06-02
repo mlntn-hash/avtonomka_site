@@ -52,6 +52,17 @@ def main() -> int:
         p.setdefault("description", "")
         p.setdefault("link", "")
 
+    komp_dir = Path(__file__).parent.parent / "assets" / "images" / "komp"
+    if komp_dir.exists():
+        komp_ids = {f.stem: f.name for f in komp_dir.iterdir() if "(" not in f.name}
+        overridden = 0
+        for p in data:
+            if "Комплект" in p.get("product_type", "") and p.get("id") in komp_ids:
+                p["image_link"] = f"assets/images/komp/{komp_ids[p['id']]}"
+                overridden += 1
+        if overridden:
+            print(f"  Замінено фото для {overridden} товарів групи Комплекти")
+
     OUTPUT_FILE.write_text(
         json.dumps(data, ensure_ascii=False, indent=2),
         encoding="utf-8",
