@@ -523,6 +523,26 @@ main { flex: 1; }
   transition: color var(--transition);
 }
 .footer-links a:hover { color: var(--color-white); }
+/* ---------- Specs table ---------- */
+.specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: .9rem;
+}
+.specs-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  vertical-align: top;
+}
+.specs-table tr:nth-child(even) td { background: var(--color-grey); }
+.specs-table td.specs-section {
+  background: #e8edf3 !important;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+/* ---------- Footer contacts ---------- */
 .footer-contacts {
   display: flex;
   flex-direction: column;

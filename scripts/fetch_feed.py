@@ -52,6 +52,7 @@ def main() -> int:
     existing_desc = {}
     existing_link = {}
     existing_embed = {}
+    existing_specs = {}
     if OUTPUT_FILE.exists():
         try:
             existing = json.loads(OUTPUT_FILE.read_text(encoding="utf-8"))
@@ -62,6 +63,8 @@ def main() -> int:
                     existing_link[item["id"]] = item["link"]
                 if item.get("embed"):
                     existing_embed[item["id"]] = item["embed"]
+                if item.get("specs"):
+                    existing_specs[item["id"]] = item["specs"]
         except Exception:
             pass
 
@@ -69,6 +72,7 @@ def main() -> int:
         p["description"] = existing_desc.get(p["id"], "")
         p["link"] = existing_link.get(p["id"], "")
         p["embed"] = existing_embed.get(p["id"], "")
+        p["specs"] = existing_specs.get(p["id"], "")
 
     komp_dir = Path(__file__).parent.parent / "assets" / "images" / "komp"
     if komp_dir.exists():

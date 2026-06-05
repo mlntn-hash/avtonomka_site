@@ -141,6 +141,16 @@ function render(p) {
     descEl.textContent = clean || 'Опис відсутній.';
   }
 
+  /* ---- Specs table ---- */
+  const specsEl = document.getElementById('product-specs');
+  if (specsEl) {
+    if (p.specs) {
+      specsEl.innerHTML = p.specs;
+    } else {
+      specsEl.remove();
+    }
+  }
+
   /* ---- Embed video ---- */
   const embedEl = document.getElementById('product-embed');
   if (embedEl) {
