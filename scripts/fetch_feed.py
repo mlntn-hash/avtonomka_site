@@ -48,9 +48,23 @@ def main() -> int:
         print("ПОМИЛКА: очікується JSON-масив", file=sys.stderr)
         return 1
 
+    # Preserve existing descriptions and links from current products.json
+    existing_desc = {}
+    existing_link = {}
+    if OUTPUT_FILE.exists():
+        try:
+            existing = json.loads(OUTPUT_FILE.read_text(encoding="utf-8"))
+            for item in existing:
+                if item.get("description"):
+                    existing_desc[item["id"]] = item["description"]
+                if item.get("link"):
+                    existing_link[item["id"]] = item["link"]
+        except Exception:
+            pass
+
     for p in data:
-        p.setdefault("description", "")
-        p.setdefault("link", "")
+        p["description"] = existing_desc.get(p["id"], "")
+        p["link"] = existing_link.get(p["id"], "")
 
     komp_dir = Path(__file__).parent.parent / "assets" / "images" / "komp"
     if komp_dir.exists():
