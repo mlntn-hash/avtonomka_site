@@ -48,9 +48,10 @@ def main() -> int:
         print("ПОМИЛКА: очікується JSON-масив", file=sys.stderr)
         return 1
 
-    # Preserve existing descriptions and links from current products.json
+    # Preserve existing descriptions, links and embeds from current products.json
     existing_desc = {}
     existing_link = {}
+    existing_embed = {}
     if OUTPUT_FILE.exists():
         try:
             existing = json.loads(OUTPUT_FILE.read_text(encoding="utf-8"))
@@ -59,12 +60,15 @@ def main() -> int:
                     existing_desc[item["id"]] = item["description"]
                 if item.get("link"):
                     existing_link[item["id"]] = item["link"]
+                if item.get("embed"):
+                    existing_embed[item["id"]] = item["embed"]
         except Exception:
             pass
 
     for p in data:
         p["description"] = existing_desc.get(p["id"], "")
         p["link"] = existing_link.get(p["id"], "")
+        p["embed"] = existing_embed.get(p["id"], "")
 
     komp_dir = Path(__file__).parent.parent / "assets" / "images" / "komp"
     if komp_dir.exists():

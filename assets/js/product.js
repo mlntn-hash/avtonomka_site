@@ -141,6 +141,16 @@ function render(p) {
     descEl.textContent = clean || 'Опис відсутній.';
   }
 
+  /* ---- Embed video ---- */
+  const embedEl = document.getElementById('product-embed');
+  if (embedEl) {
+    if (p.embed) {
+      embedEl.innerHTML = `<iframe src="${p.embed}" width="100%" height="400" allow="autoplay" allowfullscreen style="border:none;border-radius:8px;display:block;margin-top:16px"></iframe>`;
+    } else {
+      embedEl.remove();
+    }
+  }
+
   /* ---- Order button ---- */
   const orderBtn = document.getElementById('btn-order');
   if (orderBtn) orderBtn.href = tgOrderLink(p.title || '');
