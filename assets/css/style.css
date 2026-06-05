@@ -121,6 +121,12 @@ main { flex: 1; }
   border-color: #2196f3;
 }
 .btn-tg:hover { background: #1565c0; border-color: #1565c0; }
+.btn-partner {
+  background: transparent;
+  color: var(--color-orange);
+  border-color: var(--color-orange);
+}
+.btn-partner:hover { background: var(--color-orange); color: var(--color-dark); }
 .btn-sm { padding: 7px 16px; font-size: .85rem; }
 .btn-block { width: 100%; justify-content: center; }
 
@@ -173,7 +179,7 @@ main { flex: 1; }
   color: var(--color-white);
   background: rgba(255,255,255,.10);
 }
-.header-actions { flex-shrink: 0; }
+.header-actions { flex-shrink: 0; display: flex; gap: 8px; align-items: center; }
 
 /* Burger */
 .burger {
@@ -201,7 +207,7 @@ main { flex: 1; }
 .hero {
   background: var(--color-dark);
   color: var(--color-white);
-  padding: 72px 0 64px;
+  padding: 40px 0 36px;
   overflow: hidden;
 }
 .hero-inner {
@@ -517,6 +523,18 @@ main { flex: 1; }
   transition: color var(--transition);
 }
 .footer-links a:hover { color: var(--color-white); }
+.footer-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.footer-contacts a,
+.footer-contacts span {
+  color: rgba(255,255,255,.6);
+  font-size: .85rem;
+  transition: color var(--transition);
+}
+.footer-contacts a:hover { color: var(--color-white); }
 .footer-copy { font-size: .82rem; }
 
 /* ---------- Catalog page ---------- */
@@ -1178,7 +1196,8 @@ main { flex: 1; }
   .header-actions .btn { display: none; }
   .site-header { position: relative; }
 
-  .hero { padding: 48px 0 40px; }
+
+  .hero { padding: 28px 0 24px; }
   .hero-inner { flex-direction: column-reverse; gap: 28px; }
   .hero-mascot { width: 180px; }
   .hero h1 { font-size: 1.55rem; }
