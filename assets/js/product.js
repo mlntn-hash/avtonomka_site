@@ -165,6 +165,17 @@ function render(p) {
   const orderBtn = document.getElementById('btn-order');
   if (orderBtn) orderBtn.href = tgOrderLink(p.title || '');
 
+  /* ---- Datasheet button ---- */
+  const datasheetBtn = document.getElementById('btn-datasheet');
+  if (datasheetBtn) {
+    if (p.link) {
+      datasheetBtn.href = p.link;
+      datasheetBtn.classList.remove('hidden');
+    } else {
+      datasheetBtn.remove();
+    }
+  }
+
   /* ---- Show content ---- */
   document.getElementById('loading-state')?.classList.add('hidden');
   document.getElementById('product-content')?.classList.remove('hidden');
