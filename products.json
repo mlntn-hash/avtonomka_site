@@ -60,9 +60,9 @@
     "mpn": "LP16-24200",
     "condition": "new",
     "description": "MUST LP16-24200 — акумуляторна батарея LiFePO4 ємністю 200 А·год і напругою 25,6 В. Забезпечує стабільне живлення для автономних і резервних систем. Відзначається тривалим терміном служби (до 6000 циклів), високою безпекою та стійкістю до глибоких розрядів. Вага 45 кг.",
-    "link": "",
+    "link": "https://drive.google.com/file/d/15ceXot9wdIgRS1bbGIeV-4dMa5otNxxt/view?usp=sharing",
     "embed": "",
-    "specs": ""
+    "specs": "<h3 style=\"margin:20px 0 10px;font-size:1rem;color:var(--color-dark)\">Технічні характеристики</h3><table class=\"specs-table\"><tbody><tr><td colspan=\"2\" class=\"specs-section\"><strong>ОСНОВНІ ПАРАМЕТРИ</strong></td></tr><tr><td>Номінальна напруга</td><td>25.6 В</td></tr><tr><td>Номінальна ємність</td><td>200 А·год</td></tr><tr><td>Номінальна енергія</td><td>5120 Вт·год</td></tr><tr><td>Кількість циклів</td><td>6000 циклів при 80% DOD, 25°C</td></tr><tr><td>Рекомендована напруга заряду</td><td>29.2 В</td></tr><tr><td>Рекомендований струм заряду</td><td>40 А</td></tr><tr><td>Кінцева напруга розряду</td><td>22 В</td></tr><tr><td colspan=\"2\" class=\"specs-section\"><strong>СТРУМ</strong></td></tr><tr><td>Стандартний метод — Заряд</td><td>40 А</td></tr><tr><td>Стандартний метод — Розряд</td><td>100 А</td></tr><tr><td>Макс. безперервний струм — Заряд</td><td>150 А</td></tr><tr><td>Макс. безперервний струм — Розряд</td><td>150 А</td></tr><tr><td colspan=\"2\" class=\"specs-section\"><strong>НАПРУГИ ВІДКЛЮЧЕННЯ BMS</strong></td></tr><tr><td>Заряд</td><td>29.2 В (3.65 В/елемент)</td></tr><tr><td>Розряд</td><td>22.0 В (2c) (2.75 В/елемент)</td></tr><tr><td colspan=\"2\" class=\"specs-section\"><strong>ТЕМПЕРАТУРА</strong></td></tr><tr><td>Заряд</td><td>0°C – +45°C</td></tr><tr><td>Розряд</td><td>-10°C – +55°C</td></tr><tr><td>Зберігання</td><td>-5°C – +35°C</td></tr><tr><td colspan=\"2\" class=\"specs-section\"><strong>ІНШЕ</strong></td></tr><tr><td>Напруга відвантаження</td><td>≥ 25.6 В</td></tr><tr><td>Паралельність модулів</td><td>До 15 одиниць</td></tr><tr><td>Зв'язок</td><td>CAN2.0 / RS232 / RS485</td></tr><tr><td>Матеріал корпусу</td><td>SPPC</td></tr><tr><td>Розміри машини (Ш×В×Г)</td><td>486.5 × 442 × 250 мм</td></tr><tr><td>Вага нетто / брутто</td><td>44 кг / 48 кг</td></tr></tbody></table>"
   },
   {
     "id": "146741",
