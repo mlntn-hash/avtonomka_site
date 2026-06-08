@@ -804,6 +804,12 @@ main { flex: 1; }
   background: linear-gradient(135deg, rgba(46,204,64,.06) 0%, rgba(46,204,64,.02) 100%);
   border-bottom: 1px solid var(--color-border);
 }
+.product-price-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 
 .product-price-label {
   font-size: .78rem;
@@ -871,10 +877,7 @@ main { flex: 1; }
   flex-direction: column;
   gap: 12px;
 }
-.product-info__order-top {
-  margin-bottom: 20px;
-}
-.product-info__order-top .btn-tg,
+.product-price-row .btn-tg,
 .product-info__actions .btn-tg {
   font-size: 1.05rem;
   padding: 15px 24px;
