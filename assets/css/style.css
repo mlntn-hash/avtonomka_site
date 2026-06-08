@@ -871,6 +871,10 @@ main { flex: 1; }
   flex-direction: column;
   gap: 12px;
 }
+.product-info__order-top {
+  margin-bottom: 20px;
+}
+.product-info__order-top .btn-tg,
 .product-info__actions .btn-tg {
   font-size: 1.05rem;
   padding: 15px 24px;
