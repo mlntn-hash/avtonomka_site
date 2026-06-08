@@ -556,6 +556,41 @@ main { flex: 1; }
 }
 .footer-contacts a:hover { color: var(--color-white); }
 .footer-copy { font-size: .82rem; }
+.footer-legal {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: .82rem;
+}
+.footer-legal a {
+  color: rgba(255,255,255,.55);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition);
+}
+.footer-legal a:hover { color: var(--color-white); }
+
+/* ---------- Legal pages ---------- */
+.legal-content {
+  max-width: 820px;
+  margin: 0 auto;
+  line-height: 1.8;
+  color: var(--color-dark);
+}
+.legal-content h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 32px 0 10px;
+  color: var(--color-dark);
+}
+.legal-content p { margin-bottom: 12px; }
+.legal-content ul {
+  margin: 0 0 12px 20px;
+  padding: 0;
+}
+.legal-content ul li { margin-bottom: 6px; }
+.legal-content a { color: var(--color-primary); }
+.legal-content a:hover { text-decoration: underline; }
 
 /* ---------- Catalog page ---------- */
 .catalog-layout {
