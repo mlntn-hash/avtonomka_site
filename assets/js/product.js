@@ -166,13 +166,14 @@ function render(p) {
   if (orderBtn) orderBtn.href = tgOrderLink(p.title || '');
 
   /* ---- Datasheet button ---- */
-  const datasheetBtn = document.getElementById('btn-datasheet');
-  if (datasheetBtn) {
+  const datasheetWrap = document.getElementById('product-datasheet-wrap');
+  const datasheetBtn  = document.getElementById('btn-datasheet');
+  if (datasheetWrap && datasheetBtn) {
     if (p.link) {
       datasheetBtn.href = p.link;
-      datasheetBtn.classList.remove('hidden');
+      datasheetWrap.classList.remove('hidden');
     } else {
-      datasheetBtn.remove();
+      datasheetWrap.remove();
     }
   }
 
