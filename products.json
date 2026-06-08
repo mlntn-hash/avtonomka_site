@@ -888,9 +888,9 @@
     "mpn": "DHN-LVWES05-G1",
     "condition": "new",
     "description": "DAH Solar DHN-LVWES05-G1 — акумуляторна батарея LiFePO4 ємністю 100 А·год і напругою 51,2 В (5,12 кВт·год). Призначена для автономних, резервних і сонячних систем живлення. Ресурс понад 6000 циклів. Максимальний струм заряду/розряду до 100 А. Вага 45–50 кг.",
-    "link": "",
+    "link": "https://drive.google.com/file/d/1P0neLVF4IW58ADgDrAdodOU7TRMKaRKR/view?usp=sharing",
     "embed": "",
-    "specs": ""
+    "specs": "<h3 style=\"margin:20px 0 10px;font-size:1rem;color:var(--color-dark)\">Технічні характеристики</h3><table class=\"specs-table\"><tbody><tr><td colspan=\"2\" class=\"specs-section\"><strong>ОСНОВНІ ПАРАМЕТРИ</strong></td></tr><tr><td>Тип батареї</td><td>LiFePO₄</td></tr><tr><td>Номінальна енергія</td><td>5.12 кВт·год</td></tr><tr><td>Номінальна ємність</td><td>100 А·год</td></tr><tr><td>Масштабування</td><td>Паралельне підключення до 16 модулів</td></tr><tr><td>Номінальна напруга</td><td>51.2 В</td></tr><tr><td>Робоча напруга</td><td>43.2 – 58.4 В</td></tr><tr><td>Рекомендований струм заряду/розряду</td><td>50 А</td></tr><tr><td>Максимальний струм заряду/розряду</td><td>100 А</td></tr><tr><td colspan=\"2\" class=\"specs-section\"><strong>ІНШІ ПАРАМЕТРИ</strong></td></tr><tr><td>Рекомендована глибина розряду (DoD)</td><td>≤ 90%</td></tr><tr><td>Габарити (Ш×В×Г)</td><td>480 × 500 × 155 мм</td></tr><tr><td>Вага</td><td>47 кг</td></tr><tr><td>LED-індикатори</td><td>6 LED (рівень заряду SOC: 16.6% – 100%) + 3 LED (ON/OFF, робота, сигнал тривоги)</td></tr><tr><td>Ступінь захисту</td><td>IP20</td></tr><tr><td>Робоча температура</td><td>Заряд: 0°C – +60°C / Розряд: -20°C – +60°C</td></tr><tr><td>Температура зберігання</td><td>0°C – +35°C</td></tr><tr><td>Кількість циклів</td><td>≥ 6000 (при 25°C, 0.5C/0.5C, 70% залишкової ємності)</td></tr><tr><td>Монтаж</td><td>Настінний або підлоговий</td></tr><tr><td>Система пожежогасіння</td><td>Попередньо встановлений модуль (опціонально)</td></tr><tr><td>Інтерфейси</td><td>CAN 2.0 / RS485</td></tr><tr><td>Гарантія</td><td>5 років</td></tr><tr><td>Сертифікація</td><td>IEC62619, CB, CE, UN38.3</td></tr></tbody></table>"
   },
   {
     "id": "151288",
