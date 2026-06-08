@@ -740,9 +740,9 @@
     "mpn": "FLA48314-EU",
     "condition": "new",
     "description": "Felicity FLA48314-EU — потужна акумуляторна батарея LiFePO4 ємністю 314 А·год і напругою 51,2 В (16 кВт·год). Ресурс понад 6000 циклів. Підходить для приватних будинків, сонячних електростанцій і комерційних систем резервного живлення. Розміри 435×880×247 мм, вага 121,5 кг.",
-    "link": "",
+    "link": "https://drive.google.com/file/d/1cyZV2EN8xdJuVuq6fHVjFSIMebPH4Qke/view?usp=sharing",
     "embed": "",
-    "specs": ""
+    "specs": "<h3 style=\"margin:20px 0 10px;font-size:1rem;color:var(--color-dark)\">Технічні характеристики</h3><table class=\"specs-table\"><tbody><tr><td colspan=\"2\" class=\"specs-section\"><strong>ОСНОВНІ ПАРАМЕТРИ</strong></td></tr><tr><td>Тип батареї</td><td>LiFePO₄</td></tr><tr><td>Номінальна енергія</td><td>16 кВт·год</td></tr><tr><td>Номінальна напруга</td><td>51.2 В</td></tr><tr><td>Робоча напруга</td><td>44.8 – 57.6 В</td></tr><tr><td>Макс. безперервний струм заряду/розряду</td><td>160 А</td></tr><tr><td>Піковий струм заряду/розряду (15 с)</td><td>300 А</td></tr><tr><td>Макс. потужність заряду/розряду (15 с)</td><td>8000 Вт</td></tr><tr><td colspan=\"2\" class=\"specs-section\"><strong>ДОДАТКОВІ ПАРАМЕТРИ</strong></td></tr><tr><td>Масштабування</td><td>До 15 шт. паралельно (240 кВт·год)</td></tr><tr><td>Глибина розряду (DOD)</td><td>≥ 95%</td></tr><tr><td>Комунікація</td><td>RS485 / CAN</td></tr><tr><td>Ступінь захисту</td><td>IP21</td></tr><tr><td>Термін служби</td><td>≥ 8000 циклів (25°C ± 2°C, 0.5C/0.5C, 90% DOD, 70% EOL)</td></tr><tr><td>Температура заряджання</td><td>0°C – +55°C</td></tr><tr><td>Температура розряджання</td><td>-20°C – +55°C</td></tr><tr><td>Тип дисплея</td><td>LCD + LED</td></tr><tr><td>Монтаж</td><td>Підлоговий</td></tr><tr><td>Захист</td><td>Вбудована BMS, автомат, запобіжник</td></tr><tr><td>Гарантія</td><td>10 років</td></tr><tr><td>Сертифікація</td><td>UN38.3</td></tr><tr><td>Вага продукту / з упаковкою</td><td>121.5 кг / 143.5 кг</td></tr><tr><td>Габарити продукту (Ш×В×Г)</td><td>435 × 880 × 247 мм</td></tr><tr><td>Габарити упаковки (Ш×В×Г)</td><td>960 × 555 × 450 мм</td></tr></tbody></table>"
   },
   {
     "id": "151786",
