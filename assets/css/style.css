@@ -330,6 +330,7 @@ main { flex: 1; }
   flex-direction: column;
   gap: 0;
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #c4cdd8 transparent;
