@@ -320,10 +320,17 @@ main { flex: 1; }
 }
 .cat-card:last-child:nth-child(odd) { grid-column: span 2; }
 
-/* Telegram feed — 1 офіційний embed */
+/* Telegram feed — офіційний embed зі скролом */
 .tg-feed {
   width: 100%;
+  height: 680px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #c4cdd8 transparent;
 }
+.tg-feed::-webkit-scrollbar { width: 5px; }
+.tg-feed::-webkit-scrollbar-track { background: transparent; }
+.tg-feed::-webkit-scrollbar-thumb { background: #c4cdd8; border-radius: 4px; }
 .tg-feed iframe {
   width: 100% !important;
   border-radius: 12px;
