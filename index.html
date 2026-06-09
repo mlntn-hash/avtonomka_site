@@ -275,7 +275,7 @@
         const resp = await fetch('data/telegram_posts.json');
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         const posts = await resp.json();
-        const latest = (Array.isArray(posts) ? posts : []).slice(0, 4);
+        const latest = (Array.isArray(posts) ? posts : []).slice(0, 2);
 
         if (!latest.length) {
           feed.innerHTML = '<p class="text-muted" style="padding:12px">Немає публікацій.</p>';
@@ -299,6 +299,21 @@
           wrap.appendChild(s);
           feed.appendChild(wrap);
         });
+
+        /* вирівняти висоту стрічки по лівій колонці */
+        function syncHeight() {
+          const leftCol = document.querySelector('.home-split > div:first-child');
+          if (!leftCol) return;
+          const leftH = leftCol.offsetHeight;
+          const rightCol = feed.closest('.home-split > div');
+          if (!rightCol) return;
+          const titleH = rightCol.querySelector('.section-title') ? rightCol.querySelector('.section-title').offsetHeight + 40 : 80;
+          const btnH   = rightCol.querySelector('.btn-tg') ? rightCol.querySelector('.btn-tg').offsetHeight + 24 : 60;
+          feed.style.maxHeight = Math.max(200, leftH - titleH - btnH) + 'px';
+        }
+        window.addEventListener('load', syncHeight);
+        window.addEventListener('resize', syncHeight);
+        setTimeout(syncHeight, 1500);
       } catch (e) {
         feed.innerHTML = '<p class="text-muted" style="padding:12px">Не вдалося завантажити стрічку.</p>';
       }

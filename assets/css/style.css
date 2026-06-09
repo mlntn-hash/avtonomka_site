@@ -270,6 +270,8 @@ main { flex: 1; }
 .home-split > div {
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* Category cards */
