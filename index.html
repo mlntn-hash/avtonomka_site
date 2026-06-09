@@ -78,35 +78,35 @@
             <div class="cat-grid">
               <a href="catalog.html?cat=Автономна+енергетика+%3E+Гибридні+інвертори" class="cat-card">
                 <img src="https://dfi2.com.ua/images/142723_1.jpg" alt="Гібридні інвертори" class="cat-card__img" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
-                <div class="cat-card__body">
+                <div class="cat-card__overlay">
                   <div class="cat-card__name">Гібридні інвертори</div>
                   <div class="cat-card__count">9 товарів</div>
                 </div>
               </a>
               <a href="catalog.html?cat=Автономна+енергетика+%3E+Акумулятори+для+гібридних+інверторів" class="cat-card">
                 <img src="https://dfi2.com.ua/images/142727_1.jpg" alt="Акумулятори для гібридних інверторів" class="cat-card__img" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
-                <div class="cat-card__body">
+                <div class="cat-card__overlay">
                   <div class="cat-card__name">Акумулятори для гібридних інверторів</div>
                   <div class="cat-card__count">10 товарів</div>
                 </div>
               </a>
               <a href="catalog.html?cat=Автономна+енергетика+%3E+Комплекти+автономного+енергоживлення" class="cat-card">
                 <img src="assets/images/komp/150944.png" alt="Комплекти автономного енергоживлення" class="cat-card__img" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
-                <div class="cat-card__body">
+                <div class="cat-card__overlay">
                   <div class="cat-card__name">Комплекти автономного енергоживлення</div>
                   <div class="cat-card__count">28 товарів</div>
                 </div>
               </a>
               <a href="catalog.html?cat=Автономна+енергетика+%3E+Силові+та+сонячні+кабелі" class="cat-card">
                 <img src="https://dfi2.com.ua/images/146741_1.jpg" alt="Силові та сонячні кабелі" class="cat-card__img" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
-                <div class="cat-card__body">
+                <div class="cat-card__overlay">
                   <div class="cat-card__name">Силові та сонячні кабелі</div>
                   <div class="cat-card__count">11 товарів</div>
                 </div>
               </a>
               <a href="catalog.html?cat=Обладнання+%3E+Джерела+безперебійного+живлення" class="cat-card">
                 <img src="https://dfi2.com.ua/images/148245_1.jpg" alt="Джерела безперебійного живлення" class="cat-card__img" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
-                <div class="cat-card__body">
+                <div class="cat-card__overlay">
                   <div class="cat-card__name">Джерела безперебійного живлення</div>
                   <div class="cat-card__count">4 товари</div>
                 </div>
@@ -268,32 +268,42 @@
         const latest = (Array.isArray(posts) ? posts : []).slice(0, 5);
 
         if (!latest.length) {
-          feed.innerHTML = '<p class="text-muted">Немає публікацій.</p>';
+          feed.innerHTML = '<p class="text-muted" style="padding:12px">Немає публікацій.</p>';
           return;
         }
 
+        function fmtTime(iso) {
+          if (!iso) return '';
+          const d = new Date(iso);
+          const now = new Date();
+          const diffDays = Math.floor((now - d) / 86400000);
+          if (diffDays === 0) return d.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+          if (diffDays === 1) return 'вчора';
+          return d.toLocaleDateString('uk-UA', { day: 'numeric', month: 'short' });
+        }
+
         feed.innerHTML = latest.map(post => {
-          const date = post.date
-            ? new Date(post.date).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })
-            : '';
-          const text = (post.text || '').length > 200
-            ? post.text.slice(0, 200).trimEnd() + '…'
-            : (post.text || '');
+          const time = fmtTime(post.date);
+          const rawText = post.text || '';
+          const text = rawText.length > 240 ? rawText.slice(0, 240).trimEnd() + '…' : rawText;
           const photo = post.photo
             ? `<img src="${post.photo}" alt="" class="tg-post__photo" loading="lazy">`
             : '';
           const url = post.url || 'https://t.me/avtonomka_od';
           return `
           <a href="${url}" target="_blank" rel="noopener" class="tg-post">
-            ${photo}
-            <div class="tg-post__body">
-              ${date ? `<div class="tg-post__date">${date}</div>` : ''}
-              <div class="tg-post__text">${text}</div>
+            <div class="tg-post__head">
+              <div class="tg-post__avatar"><img src="assets/images/logo.jpg" alt="Автономка"></div>
+              <div class="tg-post__channel">Автономка</div>
+              ${time ? `<div class="tg-post__time">${time}</div>` : ''}
             </div>
+            ${photo}
+            <div class="tg-post__text">${text}</div>
+            <div class="tg-post__footer"><span class="tg-post__link">✈ Читати в Telegram →</span></div>
           </a>`;
         }).join('');
       } catch (e) {
-        feed.innerHTML = '<p class="text-muted">Не вдалося завантажити стрічку.</p>';
+        feed.innerHTML = '<p class="text-muted" style="padding:12px">Не вдалося завантажити стрічку.</p>';
       }
     })();
   </script>
