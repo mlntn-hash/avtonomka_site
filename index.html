@@ -282,34 +282,31 @@
           return;
         }
 
-        function fmtTime(iso) {
+        function fmtDate(iso) {
           if (!iso) return '';
-          const d = new Date(iso);
-          const now = new Date();
-          const diffDays = Math.floor((now - d) / 86400000);
-          if (diffDays === 0) return d.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
-          if (diffDays === 1) return 'вчора';
-          return d.toLocaleDateString('uk-UA', { day: 'numeric', month: 'short' });
+          return new Date(iso).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
         feed.innerHTML = latest.map(post => {
-          const time = fmtTime(post.date);
+          const date = fmtDate(post.date);
           const rawText = post.text || '';
-          const text = rawText.length > 240 ? rawText.slice(0, 240).trimEnd() + '…' : rawText;
+          const text = rawText.length > 280 ? rawText.slice(0, 280).trimEnd() + '…' : rawText;
           const photo = post.photo
-            ? `<img src="${post.photo}" alt="" class="tg-post__photo" loading="lazy">`
+            ? `<div class="tg-post__photo-wrap"><img src="${post.photo}" alt="" class="tg-post__photo" loading="lazy"></div>`
             : '';
           const url = post.url || 'https://t.me/avtonomka_od';
           return `
           <a href="${url}" target="_blank" rel="noopener" class="tg-post">
             <div class="tg-post__head">
               <div class="tg-post__avatar"><img src="assets/images/logo.jpg" alt="Автономка"></div>
-              <div class="tg-post__channel">Автономка</div>
-              ${time ? `<div class="tg-post__time">${time}</div>` : ''}
+              <div class="tg-post__meta">
+                <div class="tg-post__channel">Автономка</div>
+                ${date ? `<div class="tg-post__time">${date}</div>` : ''}
+              </div>
             </div>
             ${photo}
             <div class="tg-post__text">${text}</div>
-            <div class="tg-post__footer"><span class="tg-post__link">✈ Читати в Telegram →</span></div>
+            <div class="tg-post__footer"><span class="tg-post__link">Переглянути в Telegram →</span></div>
           </a>`;
         }).join('');
       } catch (e) {
