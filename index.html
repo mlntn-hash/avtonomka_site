@@ -268,52 +268,46 @@
 
   <script src="assets/js/main.js"></script>
   <script>
-    /* Telegram-стрічка для головної — офіційний widget */
+    /* Telegram-стрічка для головної */
     (async function () {
       const feed = document.getElementById('home-tg-feed');
       try {
         const resp = await fetch('data/telegram_posts.json');
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         const posts = await resp.json();
-        const latest = (Array.isArray(posts) ? posts : []).slice(0, 2);
+        const latest = (Array.isArray(posts) ? posts : []).slice(0, 5);
 
         if (!latest.length) {
           feed.innerHTML = '<p class="text-muted" style="padding:12px">Немає публікацій.</p>';
           return;
         }
 
-        feed.innerHTML = '';
-
-        latest.forEach(function(post) {
-          const wrap = document.createElement('div');
-          wrap.className = 'tg-embed-wrap';
-
-          const s = document.createElement('script');
-          s.async = true;
-          s.src = 'https://telegram.org/js/telegram-widget.js?22';
-          s.setAttribute('data-telegram-post', 'avtonomka_od/' + post.id);
-          s.setAttribute('data-width', '100%');
-          s.setAttribute('data-userpic', 'true');
-          s.setAttribute('data-color', '1C93E3');
-
-          wrap.appendChild(s);
-          feed.appendChild(wrap);
-        });
-
-        /* вирівняти висоту стрічки по лівій колонці */
-        function syncHeight() {
-          const leftCol = document.querySelector('.home-split > div:first-child');
-          if (!leftCol) return;
-          const leftH = leftCol.offsetHeight;
-          const rightCol = feed.closest('.home-split > div');
-          if (!rightCol) return;
-          const titleH = rightCol.querySelector('.section-title') ? rightCol.querySelector('.section-title').offsetHeight + 40 : 80;
-          const btnH   = rightCol.querySelector('.btn-tg') ? rightCol.querySelector('.btn-tg').offsetHeight + 24 : 60;
-          feed.style.maxHeight = Math.max(200, leftH - titleH - btnH) + 'px';
+        function fmtDate(iso) {
+          if (!iso) return '';
+          return new Date(iso).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
         }
-        window.addEventListener('load', syncHeight);
-        window.addEventListener('resize', syncHeight);
-        setTimeout(syncHeight, 1500);
+
+        feed.innerHTML = latest.map(function(post) {
+          const date = fmtDate(post.date);
+          const rawText = post.text || '';
+          const text = rawText.length > 280 ? rawText.slice(0, 280).trimEnd() + '…' : rawText;
+          const photo = post.photo
+            ? '<div class="tg-post__photo-wrap"><img src="' + post.photo + '" alt="" class="tg-post__photo" loading="lazy"></div>'
+            : '';
+          const url = post.url || 'https://t.me/avtonomka_od';
+          return '<a href="' + url + '" target="_blank" rel="noopener" class="tg-post">'
+            + '<div class="tg-post__head">'
+            +   '<div class="tg-post__avatar"><img src="assets/images/logo.jpg" alt="Автономка"></div>'
+            +   '<div class="tg-post__meta">'
+            +     '<div class="tg-post__channel">Автономка</div>'
+            +     (date ? '<div class="tg-post__time">' + date + '</div>' : '')
+            +   '</div>'
+            + '</div>'
+            + photo
+            + '<div class="tg-post__text">' + text + '</div>'
+            + '<div class="tg-post__footer"><span class="tg-post__link">Переглянути в Telegram →</span></div>'
+            + '</a>';
+        }).join('');
       } catch (e) {
         feed.innerHTML = '<p class="text-muted" style="padding:12px">Не вдалося завантажити стрічку.</p>';
       }
