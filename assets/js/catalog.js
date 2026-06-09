@@ -47,6 +47,8 @@ async function init() {
     const data = await resp.json();
     allProducts = Array.isArray(data) ? data : (data.products || []);
     populateCategories();
+    const urlCat = new URLSearchParams(window.location.search).get('cat');
+    if (urlCat && catSelect) catSelect.value = urlCat;
     applyFilters();
   } catch (e) {
     showError();

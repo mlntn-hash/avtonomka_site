@@ -53,9 +53,8 @@
       <div class="container">
         <div class="hero-inner">
           <div class="hero-content">
-            <span class="hero-eyebrow">Магазин автономного живлення</span>
-            <h1>Автономне живлення<br>для <span>вашого дому</span></h1>
-            <p class="hero-sub">Сонячні панелі, акумулятори, інвертори та генератори — все для надійної незалежності від мережі.</p>
+            <h1> <span>
+              Сонячні панелі, акумулятори, інвертори </span> — все що потрібно для автономного живлення.</h1>
             <div class="hero-actions">
               <a href="catalog.html" class="btn btn-primary">Переглянути каталог</a>
               <a href="https://t.me/avtonomka_od" target="_blank" rel="noopener" class="btn btn-outline-light">✈ Написати в Telegram</a>
@@ -68,18 +67,70 @@
       </div>
     </section>
 
-    <!-- ======= ОСТАННІ НАДХОДЖЕННЯ ======= -->
+    <!-- ======= КАТЕГОРІЇ + TELEGRAM ======= -->
     <section class="section">
       <div class="container">
-        <h2 class="section-title">Останні надходження</h2>
-        <div id="home-products-grid" class="products-grid" style="grid-template-columns:repeat(3,1fr)">
-          <div class="loading-state" style="grid-column:1/-1">
-            <div class="spinner"></div>
-            <span>Завантаження товарів…</span>
+        <div class="home-split">
+
+          <!-- ліва колонка: категорії -->
+          <div>
+            <h2 class="section-title">Категорії товарів</h2>
+            <div class="cat-grid">
+              <a href="catalog.html?cat=Автономна+енергетика+%3E+Гибридні+інвертори" class="cat-card">
+                <img src="https://dfi2.com.ua/images/142723_1.jpg" alt="Гібридні інвертори" class="cat-card__img" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
+                <div class="cat-card__body">
+                  <div class="cat-card__name">Гібридні інвертори</div>
+                  <div class="cat-card__count">9 товарів</div>
+                </div>
+              </a>
+              <a href="catalog.html?cat=Автономна+енергетика+%3E+Акумулятори+для+гібридних+інверторів" class="cat-card">
+                <img src="https://dfi2.com.ua/images/142727_1.jpg" alt="Акумулятори для гібридних інверторів" class="cat-card__img" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
+                <div class="cat-card__body">
+                  <div class="cat-card__name">Акумулятори для гібридних інверторів</div>
+                  <div class="cat-card__count">10 товарів</div>
+                </div>
+              </a>
+              <a href="catalog.html?cat=Автономна+енергетика+%3E+Комплекти+автономного+енергоживлення" class="cat-card">
+                <img src="assets/images/komp/150944.png" alt="Комплекти автономного енергоживлення" class="cat-card__img" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
+                <div class="cat-card__body">
+                  <div class="cat-card__name">Комплекти автономного енергоживлення</div>
+                  <div class="cat-card__count">28 товарів</div>
+                </div>
+              </a>
+              <a href="catalog.html?cat=Автономна+енергетика+%3E+Силові+та+сонячні+кабелі" class="cat-card">
+                <img src="https://dfi2.com.ua/images/146741_1.jpg" alt="Силові та сонячні кабелі" class="cat-card__img" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
+                <div class="cat-card__body">
+                  <div class="cat-card__name">Силові та сонячні кабелі</div>
+                  <div class="cat-card__count">11 товарів</div>
+                </div>
+              </a>
+              <a href="catalog.html?cat=Обладнання+%3E+Джерела+безперебійного+живлення" class="cat-card">
+                <img src="https://dfi2.com.ua/images/148245_1.jpg" alt="Джерела безперебійного живлення" class="cat-card__img" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
+                <div class="cat-card__body">
+                  <div class="cat-card__name">Джерела безперебійного живлення</div>
+                  <div class="cat-card__count">4 товари</div>
+                </div>
+              </a>
+            </div>
+            <div style="margin-top:24px">
+              <a href="catalog.html" class="btn btn-outline">Дивитись всі товари →</a>
+            </div>
           </div>
-        </div>
-        <div style="text-align:center;margin-top:32px">
-          <a href="catalog.html" class="btn btn-outline">Дивитись всі товари</a>
+
+          <!-- права колонка: Telegram-стрічка -->
+          <div>
+            <h2 class="section-title">Telegram-стрічка</h2>
+            <div id="home-tg-feed" class="tg-feed">
+              <div class="loading-state">
+                <div class="spinner"></div>
+                <span>Завантаження…</span>
+              </div>
+            </div>
+            <div style="margin-top:16px">
+              <a href="https://t.me/avtonomka_od" target="_blank" rel="noopener" class="btn btn-tg">✈ Відкрити канал</a>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -207,51 +258,42 @@
 
   <script src="assets/js/main.js"></script>
   <script>
-    /* Завантаження 4 останніх товарів для головної */
+    /* Telegram-стрічка для головної */
     (async function () {
-      const grid = document.getElementById('home-products-grid');
+      const feed = document.getElementById('home-tg-feed');
       try {
-        const resp = await fetch('products.json');
+        const resp = await fetch('data/telegram_posts.json');
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const data = await resp.json();
-        const products = (Array.isArray(data) ? data : (data.products || [])).slice(0, 6);
+        const posts = await resp.json();
+        const latest = (Array.isArray(posts) ? posts : []).slice(0, 5);
 
-        if (!products.length) {
-          grid.innerHTML = '<p class="text-muted" style="grid-column:1/-1">Товари незабаром з\'являться.</p>';
+        if (!latest.length) {
+          feed.innerHTML = '<p class="text-muted">Немає публікацій.</p>';
           return;
         }
 
-        grid.innerHTML = products.map(p => {
-          const inStock  = p.availability === 'in_stock';
-          const badge    = inStock ? '<span class="badge badge-green">✓ В наявності</span>' : '<span class="badge badge-grey">Немає</span>';
-          const rawPrice = p.price || '';
-          const num      = parseFloat(rawPrice);
-          const currency = rawPrice.replace(/[\d.\s]+/, '').trim() || 'UAH';
-          const priceStr = !isNaN(num) ? num.toLocaleString('uk-UA', { maximumFractionDigits: 0 }) + ' ' + currency : rawPrice;
-          const title    = (p.title || '').length > 80 ? p.title.slice(0, 80) + '…' : (p.title || '');
-          const cat      = (p.product_type || '').split('>').pop().trim();
-          const img      = p.image_link || 'assets/images/zaglushka.png';
-          const id       = encodeURIComponent(p.id);
+        feed.innerHTML = latest.map(post => {
+          const date = post.date
+            ? new Date(post.date).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })
+            : '';
+          const text = (post.text || '').length > 200
+            ? post.text.slice(0, 200).trimEnd() + '…'
+            : (post.text || '');
+          const photo = post.photo
+            ? `<img src="${post.photo}" alt="" class="tg-post__photo" loading="lazy">`
+            : '';
+          const url = post.url || 'https://t.me/avtonomka_od';
           return `
-          <div class="product-card">
-            <a href="product.html?id=${id}" class="product-card__img-wrap" aria-label="${title}">
-              <img src="${img}" alt="${title}" loading="lazy" onerror="this.src='assets/images/zaglushka.png'">
-              <div class="product-card__availability">${badge}</div>
-            </a>
-            <div class="product-card__body">
-              ${cat ? `<div class="product-card__category">${cat}</div>` : ''}
-              <div class="product-card__title">${title}</div>
-              <div class="product-card__price-row">
-                <span class="product-card__price">${priceStr}</span>
-              </div>
+          <a href="${url}" target="_blank" rel="noopener" class="tg-post">
+            ${photo}
+            <div class="tg-post__body">
+              ${date ? `<div class="tg-post__date">${date}</div>` : ''}
+              <div class="tg-post__text">${text}</div>
             </div>
-            <div class="product-card__footer">
-              <a href="product.html?id=${id}" class="btn btn-block">Детальніше →</a>
-            </div>
-          </div>`;
+          </a>`;
         }).join('');
       } catch (e) {
-        grid.innerHTML = '<p class="text-muted" style="grid-column:1/-1">Не вдалося завантажити товари.</p>';
+        feed.innerHTML = '<p class="text-muted">Не вдалося завантажити стрічку.</p>';
       }
     })();
   </script>
