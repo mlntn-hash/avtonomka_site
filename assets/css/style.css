@@ -292,16 +292,16 @@ main { flex: 1; }
 }
 .cat-card__img-wrap {
   width: 100%;
-  overflow: hidden;
+  background: #f5f6f8;
 }
 .cat-card__img {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
+  height: 210px;
+  object-fit: contain;
   display: block;
   transition: transform .35s ease;
 }
-.cat-card:hover .cat-card__img { transform: scale(1.06); }
+.cat-card:hover .cat-card__img { transform: scale(1.04); }
 .cat-card__overlay {
   padding: 10px 12px 12px;
   background: var(--color-white);
