@@ -39,12 +39,20 @@ jobs:
       - name: Fetch Telegram posts
         run: python scripts/fetch_telegram.py
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate catalog CSV
+        run: node scripts/export_to_csv.js
+
       - name: Commit updated data
         id: commit
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add products.json data/telegram_posts.json
+          git add products.json data/telegram_posts.json catalog_export.csv
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Змін немає, пропускаємо комміт."
