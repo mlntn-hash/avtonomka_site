@@ -1376,7 +1376,40 @@ main { flex: 1; }
   .section { padding: 40px 0; }
   .section-title { font-size: 1.4rem; }
 
-  .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  /* Hero: hide hamster */
+  .hero-mascot { display: none; }
+
+  /* TG feed: center "Відкрити канал" */
+  .tg-feed-cta { text-align: center; }
+
+  /* Why us: hide hamster icons */
+  .why-card__icon { display: none; }
+
+  /* Articles: horizontal card layout (wider, less tall) */
+  .article-card {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: 1fr auto;
+  }
+  .article-card__img { grid-column: 1; grid-row: 1 / 3; min-height: 100px; }
+  .article-card__img img { height: 100%; object-fit: cover; }
+  .article-card__img--placeholder { height: 100%; min-height: 100px; }
+  .article-card__body { grid-column: 2; grid-row: 1; padding: 12px 14px 6px; }
+  .article-card__summary { display: none; }
+  .article-card__footer { grid-column: 2; grid-row: 2; padding: 0 14px 12px; }
+
+  /* Contacts: hide hamster, center yellow stripe */
+  .contacts-mascot { display: none; }
+  .contacts-section .section-title::after { margin: 8px auto 0; }
+
+  /* Contacts: hide Telegram button */
+  .contacts-content > .btn-tg { display: none; }
+
+  /* Footer: center everything */
+  .footer-inner { flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .footer-links { justify-content: center; flex-wrap: wrap; }
+  .footer-contacts { align-items: center; }
+  .footer-legal { justify-content: center; }
 }
 
 @media (max-width: 480px) {
