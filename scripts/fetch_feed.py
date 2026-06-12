@@ -85,6 +85,16 @@ def main() -> int:
         if overridden:
             print(f"  Замінено фото для {overridden} товарів групи Комплекти")
 
+    # Комплекти без локального фото → заглушка (не використовуємо зовнішнє URL)
+    fallback = 0
+    for p in data:
+        if "Комплект" in p.get("product_type", ""):
+            if not p.get("image_link", "").startswith("assets/"):
+                p["image_link"] = "assets/images/zaglushka.png"
+                fallback += 1
+    if fallback:
+        print(f"  Заглушка для {fallback} комплектів без локального фото")
+
     OUTPUT_FILE.write_text(
         json.dumps(data, ensure_ascii=False, indent=2),
         encoding="utf-8",

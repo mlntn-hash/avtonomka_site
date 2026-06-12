@@ -22,7 +22,7 @@ from bs4 import BeautifulSoup
 CHANNEL    = "avtonomka_od"
 CHANNEL_URL = f"https://t.me/s/{CHANNEL}"
 OUTPUT_FILE = Path(__file__).parent.parent / "data" / "telegram_posts.json"
-MAX_POSTS   = 20
+MAX_POSTS   = 30
 
 HEADERS = {
     "User-Agent": (
