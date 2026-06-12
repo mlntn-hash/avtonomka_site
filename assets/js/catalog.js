@@ -63,7 +63,7 @@ function populateCategories() {
   types.forEach(t => {
     const opt = document.createElement('option');
     opt.value = t;
-    opt.textContent = t;
+    opt.textContent = t.split('>').pop().trim();
     catSelect.appendChild(opt);
   });
 }
@@ -149,7 +149,7 @@ function renderCard(p) {
     </a>
     <div class="product-card__body">
       ${cat ? `<div class="product-card__category">${escapeHtml(cat)}</div>` : ''}
-      <div class="product-card__title">${escapeHtml(title)}</div>
+      <a href="product.html?id=${encodeURIComponent(p.id)}" class="product-card__title">${escapeHtml(title)}</a>
       <div class="product-card__price-row">
         <span class="product-card__price">${escapeHtml(priceStr)}</span>
         ${p.mpn ? `<span class="product-card__sku">Арт.: ${escapeHtml(p.mpn)}</span>` : ''}
