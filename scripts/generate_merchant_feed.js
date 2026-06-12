@@ -36,13 +36,18 @@ function productLink(id) {
   return `${SITE_URL}/product.html?id=${encodeURIComponent(id)}`;
 }
 
+function absoluteUrl(url) {
+  if (!url) return '';
+  return url.startsWith('http') ? url : `${SITE_URL}/${url.replace(/^\//, '')}`;
+}
+
 const items = products.map(p => {
   const price = formatPrice(p.price);
   if (!price) return '';
 
   const additionalImages = (p.additional_images || [])
     .slice(0, 10)
-    .map(img => `      <g:additional_image_link>${escXml(img)}</g:additional_image_link>`)
+    .map(img => `      <g:additional_image_link>${escXml(absoluteUrl(img))}</g:additional_image_link>`)
     .join('\n');
 
   return `
@@ -51,7 +56,7 @@ const items = products.map(p => {
       <g:title>${escXml(p.title)}</g:title>
       <g:description>${escXml(p.description || p.title)}</g:description>
       <g:link>${escXml(productLink(p.id))}</g:link>
-      <g:image_link>${escXml(p.image_link)}</g:image_link>
+      <g:image_link>${escXml(absoluteUrl(p.image_link))}</g:image_link>
 ${additionalImages ? additionalImages + '\n' : ''}      <g:price>${price}</g:price>
       <g:availability>${availability(p.availability)}</g:availability>
       <g:condition>${escXml(p.condition || 'new')}</g:condition>
