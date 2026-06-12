@@ -2,7 +2,7 @@ name: Update site data
 
 on:
   schedule:
-    - cron: '0 6 * * *'   # щодня о 06:00 UTC
+    - cron: '0 9 * * *'   # щодня о 09:00 UTC
   workflow_dispatch:        # ручний запуск з Actions UI
 
 permissions:
